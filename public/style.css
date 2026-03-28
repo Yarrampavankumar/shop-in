@@ -9,7 +9,6 @@
     --card-bg: #ffffff;
 }
 
-/* Reset baseline padding and margin */
 * {
     margin: 0;
     padding: 0;
@@ -22,7 +21,6 @@ body {
     color: var(--text-dark);
 }
 
-/* Header style mimicking an e-commerce platform */
 .navbar {
     background-color: var(--primary-bg);
     color: var(--text-light);

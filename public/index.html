@@ -17,8 +17,9 @@
             <input type="text" placeholder="Search products..." id="search-input">
             <button onclick="searchProducts()">Search</button>
         </div>
-        <div class="nav-links">
-            <a href="#" onclick="openModal('signin-modal')">Hello, Sign in</a>
+        <div class="nav-links" style="display: flex; align-items: center;">
+            <span id="user-greeting" style="font-weight: bold; margin-right: 15px;">Hello, User</span>
+            <a href="#" onclick="logout()" id="logout-btn">Logout</a>
             <a href="#" onclick="openModal('returns-modal')">Returns & Orders</a>
             <a href="#" onclick="openModal('cart-modal')" id="cart-link">🛒 Cart (<span id="cart-count">0</span>)</a>
         </div>
@@ -43,18 +44,6 @@
     </footer>
 
     <!-- Modals -->
-    <div id="signin-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('signin-modal')">&times;</span>
-            <h2 style="margin-bottom: 20px;">Sign In</h2>
-            <form onsubmit="handleSignIn(event)" style="display: flex; flex-direction: column; gap: 15px;">
-                <input type="email" id="signin-email" placeholder="Email" required style="padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;">
-                <input type="password" id="signin-password" placeholder="Password" required style="padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;">
-                <button type="submit" class="add-to-cart">Sign In</button>
-            </form>
-        </div>
-    </div>
-
     <div id="returns-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('returns-modal')">&times;</span>

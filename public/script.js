@@ -5,6 +5,20 @@ let cartTotal = 0;
 
 // Initialize app when DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Check if user is logged in
+    const userStr = localStorage.getItem('user');
+    if (!userStr) {
+        window.location.href = 'login.html';
+        return;
+    }
+    
+    // Set greeting
+    const user = JSON.parse(userStr);
+    const greetingEl = document.getElementById('user-greeting');
+    if (greetingEl) {
+        greetingEl.textContent = `Hello, ${user.name.split(' ')[0]}`;
+    }
+
     fetchProducts();
 });
 
@@ -153,19 +167,10 @@ window.onclick = function(event) {
     }
 }
 
-// Sign In Logic
-function handleSignIn(event) {
-    event.preventDefault(); // Stop form submission
-    const email = document.getElementById('signin-email').value;
-    alert(`Signed in successfully as ${email}!`);
-    closeModal('signin-modal');
-    
-    // Change "Hello, Sign in" text to show they're logged in
-    document.querySelector('.nav-links a:first-child').innerHTML = `Hello, ${email.split('@')[0]}`;
-    
-    // Reset forms
-    document.getElementById('signin-email').value = '';
-    document.getElementById('signin-password').value = '';
+// Logout Logic
+function logout() {
+    localStorage.removeItem('user');
+    window.location.href = 'login.html';
 }
 
 // Checkout Logic
