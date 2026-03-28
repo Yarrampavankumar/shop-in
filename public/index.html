@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Adds a clean modern look without needing external frameworks -->
+    <title>Simple E-Commerce Store</title>
+    <!-- Use basic css -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">SHOP-IN</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search products..." id="search-input">
+            <button onclick="searchProducts()">Search</button>
+        </div>
+        <div class="nav-links">
+            <a href="#" onclick="openModal('signin-modal')">Hello, Sign in</a>
+            <a href="#" onclick="openModal('returns-modal')">Returns & Orders</a>
+            <a href="#" onclick="openModal('cart-modal')" id="cart-link">🛒 Cart (<span id="cart-count">0</span>)</a>
+        </div>
+    </header>
+
+    <nav class="categories">
+        <button class="nav-button active" onclick="filterCategory('All', this)">All</button>
+        <button class="nav-button" onclick="filterCategory('Phones', this)">Phones</button>
+        <button class="nav-button" onclick="filterCategory('Laptops', this)">Laptops</button>
+    </nav>
+
+    <main class="main-content">
+        <h2>Recommended For You</h2>
+        <div id="product-container" class="product-grid">
+            <!-- Products will be injected here by basic Javascript -->
+            <p class="loading">Loading products from MySQL database via Node.js server...</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Simple E-Commerce Store. Powered by HTML, CSS, Vanilla JS, and MySQL.</p>
+    </footer>
+
+    <!-- Modals -->
+    <div id="signin-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('signin-modal')">&times;</span>
+            <h2 style="margin-bottom: 20px;">Sign In</h2>
+            <form onsubmit="handleSignIn(event)" style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="email" id="signin-email" placeholder="Email" required style="padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;">
+                <input type="password" id="signin-password" placeholder="Password" required style="padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;">
+                <button type="submit" class="add-to-cart">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="returns-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('returns-modal')">&times;</span>
+            <h2 style="margin-bottom: 20px;">Returns & Orders</h2>
+            <p style="color: #555;">Please sign in to view your recent orders and returns.</p>
+        </div>
+    </div>
+
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('cart-modal')">&times;</span>
+            <h2 style="margin-bottom: 20px;">Your Shopping Cart</h2>
+            <div id="cart-items" style="max-height: 300px; overflow-y: auto;">
+                <p>Your cart is empty.</p>
+            </div>
+            <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; text-align: right;">
+                <strong style="font-size: 1.2rem;">Total: ₹<span id="cart-total">0.00</span></strong>
+                <br><br>
+                <button class="add-to-cart" onclick="checkout()" style="width: auto; padding: 10px 30px;">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Use basic javascript -->
+    <script src="script.js"></script>
+</body>
+
+</html>

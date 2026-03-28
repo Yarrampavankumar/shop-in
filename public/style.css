@@ -1,0 +1,278 @@
+/* Basic variable setup for color palette */
+:root {
+    --primary-bg: #131921;
+    --nav-bg: #232f3e;
+    --accent: #f0c14b;
+    --text-light: #ffffff;
+    --text-dark: #0f1111;
+    --bg-light: #eaeded;
+    --card-bg: #ffffff;
+}
+
+/* Reset baseline padding and margin */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+/* Header style mimicking an e-commerce platform */
+.navbar {
+    background-color: var(--primary-bg);
+    color: var(--text-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    min-width: max-content;
+}
+
+.search-bar {
+    display: flex;
+    flex: 1;
+    max-width: 800px;
+    margin: 0 40px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+    font-size: 1rem;
+}
+
+.search-bar button {
+    background-color: var(--accent);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.search-bar button:hover {
+    background-color: #f4d078;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 0.95rem;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* Categories navbar underneath header */
+.categories {
+    background-color: var(--nav-bg);
+    padding: 8px 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.nav-button {
+    background: none;
+    border: 1px solid transparent;
+    color: var(--text-light);
+    font-size: 0.95rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.nav-button:hover, .nav-button.active {
+    border: 1px solid white;
+}
+
+/* Main Content area */
+.main-content {
+    max-width: 1300px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.main-content h2 {
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.loading {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.error-message {
+    color: #B12704;
+    background-color: #fdf2f2;
+    padding: 20px;
+    border: 1px solid #ffcccc;
+    border-radius: 5px;
+    font-size: 1.1rem;
+}
+
+/* CSS Grid for placing products inline */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+/* Styling for individual product cards */
+.product-card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.product-image {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #0f1111;
+}
+
+.product-category {
+    font-size: 0.85rem;
+    color: #565959;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.product-desc {
+    font-size: 0.95rem;
+    color: #565959;
+    margin-bottom: 15px;
+    flex-grow: 1;
+    line-height: 1.4;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 15px;
+    color: #0f1111;
+}
+
+/* Button style matching ecommerce */
+.add-to-cart {
+    background-color: var(--accent);
+    border: none;
+    padding: 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    width: 100%;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 5px rgba(213,217,217,.5);
+}
+
+.add-to-cart:hover {
+    background-color: #f4d078;
+}
+
+footer {
+    text-align: center;
+    padding: 30px 20px;
+    background-color: var(--nav-bg);
+    color: var(--text-light);
+    margin-top: 60px;
+    font-size: 0.9rem;
+}
+
+/* Modal backgrounds */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: var(--card-bg);
+    margin: 10% auto; /* 10% from the top and centered */
+    padding: 30px;
+    border: 1px solid #888;
+    width: 90%; 
+    max-width: 500px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+/* The Close Button */
+.close-btn {
+    color: #aaa;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
