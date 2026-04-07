@@ -64,9 +64,13 @@ function renderProducts(products) {
         const card = document.createElement('div');
         card.className = 'product-card';
 
-        // Use standard placeholders to simulate product images since we don't have local image files.
-        // It uses ui-avatars to create a nice initials based background block.
-        const imageUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(product.name)}&background=random&color=fff&size=200&font-size=0.25&rounded=false`;
+        // Use the product image URL from the database, or a placeholder if missing
+        let imageUrl = product.image_url;
+        if (imageUrl && !imageUrl.startsWith('http')) {
+            imageUrl = `/images/${imageUrl}`;
+        } else if (!imageUrl) {
+            imageUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(product.name)}&background=random&color=fff&size=200&font-size=0.25&rounded=false`;
+        }
         
         // Multiply by 83 for realistic INR values since DB is in USD
         const priceInRupees = Number(product.price) * 83;
