@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopin-db
+  namespace: pavankumar-9639-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopin-db
+  template:
+    metadata:
+      labels:
+        app: shopin-db
+    spec:
+      containers:
+        - name: shopin-db
+          image: mysql:8.0
+          args:
+            - "--default-authentication-plugin=mysql_native_password"
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "Pavan@9639"
+            - name: MYSQL_DATABASE
+              value: "ecommerce_db"
+          volumeMounts:
+            - name: db-init
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: db-init
+          configMap:
+            name: db-init-script
