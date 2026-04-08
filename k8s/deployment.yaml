@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: shopin-app
-          image: pavan/shopin-app:latest
+          image: pavankumar9639/shopin-app:latest
           ports:
             - containerPort: 3000
           env:
