@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopin-app-service
+  namespace: pavankumar-9639-dev
+spec:
+  selector:
+    app: shopin-app
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP

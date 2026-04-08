@@ -50,8 +50,15 @@ app.post('/api/register', async (req, res) => {
   }
 
   try {
-    const { valid, reason, validators } = await emailValidator.validate(email);
-    if (!valid) {
+    const { valid, reason, validators } = await emailValidator.validate({
+      email: email,
+      validateRegex: true,
+      validateMx: true,
+      validateTypo: true,
+      validateDisposable: true,
+      validateSMTP: false
+    });
+    if (!valid && reason !== 'smtp') {
       return res.status(400).json({ error: 'This email does not seem to exist. Please use a real email address.' });
     }
   } catch (error) {

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopin-app
+  namespace: pavankumar-9639-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopin-app
+  template:
+    metadata:
+      labels:
+        app: shopin-app
+    spec:
+      containers:
+        - name: shopin-app
+          image: pavan/shopin-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DB_HOST
+              value: "shopin-db"
+            - name: DB_USER
+              value: "root"
+            - name: DB_PASSWORD
+              value: "Pavan@9639"
+            - name: DB_NAME
+              value: "ecommerce_db"
