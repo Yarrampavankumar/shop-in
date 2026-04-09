@@ -2,6 +2,8 @@ const express = require('express');
 const mysql = require('mysql2');
 const path = require('path');
 const emailValidator = require('deep-email-validator');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const app = express();
 const port = 3000;
 
@@ -65,27 +67,33 @@ app.post('/api/register', async (req, res) => {
     console.error('Email validation error:', error);
   }
 
-  const query = 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
-  db.query(query, [name, email, password], (err, results) => {
-    if (err) {
-      if (err.code === 'ER_DUP_ENTRY') {
-        return res.status(409).json({ error: 'Email already exists' });
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const query = 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
+    db.query(query, [name, email, hashedPassword], (err, results) => {
+      if (err) {
+        if (err.code === 'ER_DUP_ENTRY') {
+          return res.status(409).json({ error: 'Email already exists' });
+        }
+        console.error('Database insertion error:', err.message);
+        return res.status(500).json({ error: 'Database error' });
       }
-      console.error('Database insertion error:', err.message);
-      return res.status(500).json({ error: 'Database error' });
-    }
-    res.status(201).json({ message: 'User registered successfully!' });
-  });
+      res.status(201).json({ message: 'User registered successfully!' });
+    });
+  } catch (hashError) {
+    console.error('Error hashing password:', hashError);
+    return res.status(500).json({ error: 'Server error during registration' });
+  }
 });
 
-app.post('/api/login', (req, res) => {
+app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(400).json({ error: 'Email and password are required' });
   }
 
   const query = 'SELECT * FROM users WHERE email = ?';
-  db.query(query, [email], (err, results) => {
+  db.query(query, [email], async (err, results) => {
     if (err) {
       console.error('Database fetch error:', err.message);
       return res.status(500).json({ error: 'Database error' });
@@ -94,11 +102,19 @@ app.post('/api/login', (req, res) => {
     if (results.length > 0) {
       const user = results[0];
 
-      // Check if password matches
-      if (user.password === password) {
-        res.json({ id: user.id, name: user.name, email: user.email });
-      } else {
-        res.status(401).json({ error: 'Incorrect password' });
+      // Check if password matches using bcrypt
+      try {
+        const match = await bcrypt.compare(password, user.password);
+        if (match) {
+          // Generate a JWT token
+          const token = jwt.sign({ id: user.id, email: user.email }, 'your_super_secret_jwt_key', { expiresIn: '2h' });
+          res.json({ id: user.id, name: user.name, email: user.email, token });
+        } else {
+          res.status(401).json({ error: 'Incorrect password' });
+        }
+      } catch (err) {
+        console.error('Error verifying password:', err.message);
+        res.status(500).json({ error: 'Error verifying password' });
       }
     } else {
       // Email was not found in the database
