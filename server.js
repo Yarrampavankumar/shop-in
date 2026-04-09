@@ -10,20 +10,23 @@ const port = 3000;
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || 'Pavan@9639',
-  database: process.env.DB_NAME || 'ecommerce_db'
+  database: process.env.DB_NAME || 'ecommerce_db',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-db.connect((err) => {
+db.getConnection((err, connection) => {
   if (err) {
-    console.error('Error connecting to MySQL:', err.message);
+    console.error('Error connecting to MySQL pool:', err.message);
     console.log('Please ensure MySQL is running, the database is created via database.sql, and the password is correct.');
-
   } else {
-    console.log('Connected to MySQL database "ecommerce_db".');
+    console.log('Successfully connected to MySQL database pool "ecommerce_db".');
+    connection.release();
   }
 });
 
